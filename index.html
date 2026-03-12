@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23818cf8%22 stroke-width=%222%22><path d=%22M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20%22/></svg>" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -37,11 +38,15 @@
       <div class="nav-center">
         <button class="nav-btn active" data-target="view-dashboard">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          <span data-i18n="nav.home">Inicio</span>
+          <span class="nav-text" data-i18n="nav.home">Inicio</span>
         </button>
         <button class="nav-btn" data-target="view-study">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          <span data-i18n="nav.study">Directorio</span>
+          <span class="nav-text" data-i18n="nav.study">Directorio</span>
+        </button>
+        <button class="nav-btn" data-target="view-weakwords">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#f87171" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="nav-text" data-i18n="nav.weak">Mis difíciles</span>
         </button>
       </div>
 
@@ -250,6 +255,51 @@
           <span class="status-badge dark" data-i18n="study.count">11 Bloques</span>
         </div>
         <div class="accordion-container" id="tablesContainer"></div>
+      </section>
+    </div>
+
+    <!-- ══ WEAK WORDS VIEW ══ -->
+    <div id="view-weakwords" class="app-view">
+      <section class="glass-card">
+        <div class="card-header border-bottom">
+          <div class="header-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="#f87171" stroke-width="2" viewBox="0 0 24 24" class="title-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <h2 data-i18n="weak.title">Mis palabras difíciles</h2>
+          </div>
+          <span class="status-badge danger" id="weakWordCount">0 palabras</span>
+        </div>
+
+        <!-- Empty state -->
+        <div class="weak-empty" id="weakEmptyState">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" stroke="var(--text-muted)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <p data-i18n="weak.empty">Todavía no hay palabras difíciles. Haz un quiz para empezar a registrar errores.</p>
+        </div>
+
+        <!-- Weak words table -->
+        <div id="weakWordsTableWrap" class="hidden">
+          <div class="weak-actions">
+            <button class="btn btn-danger-outline" id="practiceWeakBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span data-i18n="weak.practice">Repasar difíciles</span>
+            </button>
+            <button class="btn btn-ghost" id="clearWeakBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+              <span data-i18n="weak.clear">Borrar historial</span>
+            </button>
+          </div>
+          <table class="weak-table">
+            <thead>
+              <tr>
+                <th data-i18n="weak.col.word">Palabra</th>
+                <th data-i18n="weak.col.spanish">Español</th>
+                <th data-i18n="weak.col.block">Bloque</th>
+                <th class="center" data-i18n="weak.col.errors">Errores</th>
+                <th class="center" data-i18n="weak.col.seen">Visto</th>
+              </tr>
+            </thead>
+            <tbody id="weakWordsTableBody"></tbody>
+          </table>
+        </div>
       </section>
     </div>
 

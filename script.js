@@ -954,7 +954,7 @@ function handleAnswer(selectedButton, selectedValue, question, term) {
   if (isCorrect) {
     score += 1;
     feedbackText.classList.add("fb-correct");
-    feedbackText.innerHTML = `<strong>✅ ¡Correcto!</strong><br>Inglés: ${term.english} · Español: ${term.spanish}<br>Significado: ${term.meaning}`;
+    feedbackText.innerHTML = `<strong>Correcto</strong><br>Inglés: ${term.english} · Español: ${term.spanish}<br>Significado: ${term.meaning}`;
   } else {
     mistakes.push({
       questionTitle: question.title,
@@ -964,8 +964,10 @@ function handleAnswer(selectedButton, selectedValue, question, term) {
       term,
     });
 
+    trackWeakWord(term); // <-- save to localStorage
+
     feedbackText.classList.add("fb-wrong");
-    feedbackText.innerHTML = `<strong>❌ Incorrecto</strong> · Respuesta: ${question.answer}<br>Inglés: ${term.english} · Español: ${term.spanish}<br>Significado: ${term.meaning}`;
+    feedbackText.innerHTML = `<strong>Incorrecto</strong> · Respuesta: ${question.answer}<br>Inglés: ${term.english} · Español: ${term.spanish}<br>Significado: ${term.meaning}`;
   }
 
   scoreText.textContent = `${score}`;
@@ -1235,6 +1237,113 @@ setProgressBar(0, 1);
 updateTimerDisplay();
 nextButton.classList.add("hidden");
 
+// ── Weak Words System (localStorage) ──
+const WEAK_KEY = "vocabMastery_weakWords";
+
+function loadWeakWords() {
+  try {
+    return JSON.parse(localStorage.getItem(WEAK_KEY)) || {};
+  } catch {
+    return {};
+  }
+}
+
+function saveWeakWords(data) {
+  localStorage.setItem(WEAK_KEY, JSON.stringify(data));
+}
+
+function trackWeakWord(term) {
+  const data = loadWeakWords();
+  const key = term.english;
+  if (!data[key]) {
+    data[key] = { english: term.english, spanish: term.spanish, meaning: term.meaning, block: term.block, misses: 0, lastSeen: null };
+  }
+  data[key].misses += 1;
+  data[key].lastSeen = new Date().toLocaleDateString("es-CO", { day: "2-digit", month: "2-digit", year: "2-digit" });
+  saveWeakWords(data);
+}
+
+function renderWeakWordsView() {
+  const data = loadWeakWords();
+  const words = Object.values(data).sort((a, b) => b.misses - a.misses);
+
+  const emptyState = document.getElementById("weakEmptyState");
+  const tableWrap = document.getElementById("weakWordsTableWrap");
+  const tbody = document.getElementById("weakWordsTableBody");
+  const countBadge = document.getElementById("weakWordCount");
+
+  if (words.length === 0) {
+    emptyState.style.display = "flex";
+    tableWrap.classList.add("hidden");
+    countBadge.textContent = currentLang === "es" ? "0 palabras" : "0 words";
+    return;
+  }
+
+  emptyState.style.display = "none";
+  tableWrap.classList.remove("hidden");
+  const label = currentLang === "es" ? `${words.length} palabras` : `${words.length} words`;
+  countBadge.textContent = label;
+
+  tbody.innerHTML = "";
+  words.forEach((w) => {
+    const missBadgeClass = w.misses >= 5 ? "miss-high" : w.misses >= 3 ? "miss-mid" : "miss-low";
+    const blockShort = w.block.replace(/^BLOQUE \d+ — /, "");
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td class="word-cell">${w.english}</td>
+      <td>${w.spanish}</td>
+      <td>${blockShort}</td>
+      <td class="center"><span class="miss-badge ${missBadgeClass}">${w.misses}</span></td>
+      <td class="center date-cell">${w.lastSeen || "—"}</td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+function getWeakPool() {
+  const data = loadWeakWords();
+  return allTerms.filter((t) => data[t.english]);
+}
+
+// Wire up weak words view button
+const practiceWeakBtn = document.getElementById("practiceWeakBtn");
+const clearWeakBtn = document.getElementById("clearWeakBtn");
+
+practiceWeakBtn.addEventListener("click", () => {
+  const pool = getWeakPool();
+  if (pool.length === 0) return;
+
+  currentPool = shuffleArray(pool);
+  currentMode = "mixed";
+  currentPracticeType = "weakwords";
+
+  const questionCount = Math.min(currentPool.length, 20);
+  currentQuestions = buildQuestions(currentPool, questionCount, "mixed");
+  currentQuestionIndex = 0;
+  score = 0;
+  mistakes = [];
+  quizEnded = false;
+  quizStartedAt = Date.now();
+  totalTimerSeconds = null;
+  remainingSeconds = null;
+  clearTimer();
+  updateTimerDisplay();
+
+  switchView("view-quiz");
+  renderQuestion();
+});
+
+clearWeakBtn.addEventListener("click", () => {
+  if (!confirm(currentLang === "es" ? "¿Borrar todo el historial de errores?" : "Delete all error history?")) return;
+  localStorage.removeItem(WEAK_KEY);
+  renderWeakWordsView();
+});
+
+// Refresh weak words table each time that view is opened
+document.querySelectorAll(".nav-btn[data-target='view-weakwords']").forEach((btn) => {
+  btn.addEventListener("click", renderWeakWordsView);
+});
+
 // ── SPA View Navigation Logic ──
 const views = document.querySelectorAll(".app-view");
 const navBtns = document.querySelectorAll(".nav-btn");
@@ -1295,6 +1404,16 @@ const translations = {
     "study.title": "Directorio de Repaso",
     "study.count": "11 Bloques",
     "footer": "Diseñado para el aprendizaje intensivo.",
+    "nav.weak": "Mis difíciles",
+    "weak.title": "Mis palabras difíciles",
+    "weak.empty": "Todavía no hay palabras difíciles. Haz un quiz para empezar a registrar errores.",
+    "weak.practice": "Repasar difíciles",
+    "weak.clear": "Borrar historial",
+    "weak.col.word": "Palabra",
+    "weak.col.spanish": "Español",
+    "weak.col.block": "Bloque",
+    "weak.col.errors": "Errores",
+    "weak.col.seen": "Visto",
   },
   en: {
     "nav.home": "Home",
@@ -1322,6 +1441,16 @@ const translations = {
     "study.title": "Study Glossary",
     "study.count": "11 Blocks",
     "footer": "Designed for intensive vocabulary learning.",
+    "nav.weak": "My hard words",
+    "weak.title": "My difficult words",
+    "weak.empty": "No difficult words yet. Do a quiz to start tracking your mistakes.",
+    "weak.practice": "Practice hard words",
+    "weak.clear": "Clear history",
+    "weak.col.word": "Word",
+    "weak.col.spanish": "Spanish",
+    "weak.col.block": "Block",
+    "weak.col.errors": "Errors",
+    "weak.col.seen": "Last seen",
   },
 };
 
@@ -1362,3 +1491,5 @@ document.querySelectorAll(".lang-btn").forEach((btn) => {
 // Apply default language on load
 applyTranslations("es");
 
+// Initialize weak words view state on load
+renderWeakWordsView();
