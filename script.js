@@ -1305,44 +1305,54 @@ function getWeakPool() {
   return allTerms.filter((t) => data[t.english]);
 }
 
-// Wire up weak words view button
-const practiceWeakBtn = document.getElementById("practiceWeakBtn");
-const clearWeakBtn = document.getElementById("clearWeakBtn");
+// Wire up weak words view buttons (null-safe to avoid crashing full script)
+(function initWeakWordButtons() {
+  const practiceWeakBtn = document.getElementById("practiceWeakBtn");
+  const clearWeakBtn = document.getElementById("clearWeakBtn");
 
-practiceWeakBtn.addEventListener("click", () => {
-  const pool = getWeakPool();
-  if (pool.length === 0) return;
+  if (practiceWeakBtn) {
+    practiceWeakBtn.addEventListener("click", () => {
+      const pool = getWeakPool();
+      if (pool.length === 0) return;
 
-  currentPool = shuffleArray(pool);
-  currentMode = "mixed";
-  currentPracticeType = "weakwords";
+      currentPool = shuffleArray(pool);
+      currentMode = "mixed";
+      currentPracticeType = "weakwords";
 
-  const questionCount = Math.min(currentPool.length, 20);
-  currentQuestions = buildQuestions(currentPool, questionCount, "mixed");
-  currentQuestionIndex = 0;
-  score = 0;
-  mistakes = [];
-  quizEnded = false;
-  quizStartedAt = Date.now();
-  totalTimerSeconds = null;
-  remainingSeconds = null;
-  clearTimer();
-  updateTimerDisplay();
+      const questionCount = Math.min(currentPool.length, 20);
+      currentQuestions = buildQuestions(currentPool, questionCount, "mixed");
+      currentQuestionIndex = 0;
+      score = 0;
+      mistakes = [];
+      quizEnded = false;
+      quizStartedAt = Date.now();
+      totalTimerSeconds = null;
+      remainingSeconds = null;
+      clearTimer();
+      updateTimerDisplay();
 
-  switchView("view-quiz");
-  renderQuestion();
-});
+      switchView("view-quiz");
+      renderQuestion();
+    });
+  }
 
-clearWeakBtn.addEventListener("click", () => {
-  if (!confirm(currentLang === "es" ? "¿Borrar todo el historial de errores?" : "Delete all error history?")) return;
-  localStorage.removeItem(WEAK_KEY);
-  renderWeakWordsView();
-});
+  if (clearWeakBtn) {
+    clearWeakBtn.addEventListener("click", () => {
+      const msg = typeof currentLang !== "undefined" && currentLang === "en"
+        ? "Delete all error history?"
+        : "¿Borrar todo el historial de errores?";
+      if (!confirm(msg)) return;
+      localStorage.removeItem(WEAK_KEY);
+      renderWeakWordsView();
+    });
+  }
+})();
 
-// Refresh weak words table each time that view is opened
+// Refresh weak words table each time that view is opened via nav
 document.querySelectorAll(".nav-btn[data-target='view-weakwords']").forEach((btn) => {
   btn.addEventListener("click", renderWeakWordsView);
 });
+
 
 // ── SPA View Navigation Logic ──
 const views = document.querySelectorAll(".app-view");
