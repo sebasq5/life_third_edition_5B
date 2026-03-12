@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>English Vocab Mastery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Ambient Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- ── NAVIGATION BAR ── -->
+  <nav class="top-nav">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="url(#grad-nav)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <defs>
+            <linearGradient id="grad-nav" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#818cf8"/>
+              <stop offset="100%" style="stop-color:#c084fc"/>
+            </linearGradient>
+          </defs>
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+        </svg>
+        <span>Vocab Mastery</span>
+      </div>
+
+      <div class="nav-center">
+        <button class="nav-btn active" data-target="view-dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span data-i18n="nav.home">Inicio</span>
+        </button>
+        <button class="nav-btn" data-target="view-study">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span data-i18n="nav.study">Directorio</span>
+        </button>
+      </div>
+
+      <!-- Language Switcher -->
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <span class="lang-sep">/</span>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="app-container">
+
+    <!-- ══ DASHBOARD VIEW ══ -->
+    <div id="view-dashboard" class="app-view active-view">
+      <header class="hero-section">
+        <div class="icon-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#grad-icon)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <linearGradient id="grad-icon" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#818cf8"/>
+                <stop offset="100%" style="stop-color:#c084fc"/>
+              </linearGradient>
+            </defs>
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <h1 class="gradient-text" data-i18n="hero.title">English Vocab Mastery</h1>
+        <p class="subtitle" data-i18n="hero.subtitle">Unidades 7–12 · 98 términos · Práctica intensiva</p>
+        <div class="tag-group">
+          <span class="tag">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="var(--primary)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span data-i18n="tag.quiz">Quiz interactivo</span>
+          </span>
+          <span class="tag">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="var(--warning)" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span data-i18n="tag.exam">Examen 25</span>
+          </span>
+          <span class="tag">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="var(--success)" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <span data-i18n="tag.review">Repaso guiado</span>
+          </span>
+        </div>
+      </header>
+
+      <!-- Configuration Panel -->
+      <section class="glass-card" id="configPanel">
+        <div class="card-header">
+          <div class="header-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="title-icon"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <h2 data-i18n="config.title">Configuración</h2>
+          </div>
+          <span class="status-badge" id="termCount">98 términos</span>
+        </div>
+
+        <div class="control-grid">
+          <div class="input-group">
+            <label for="practiceTypeSelect" data-i18n="config.mode">Modalidad</label>
+            <div class="select-wrapper">
+              <select id="practiceTypeSelect">
+                <option value="custom" data-i18n-opt="config.custom">Quiz Personalizado</option>
+                <option value="exam25" data-i18n-opt="config.exam25">Examen de 25 Probables</option>
+              </select>
+              <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="blockSelect" data-i18n="config.block">Bloque Temático</label>
+            <div class="select-wrapper">
+              <select id="blockSelect"></select>
+              <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="modeSelect" data-i18n="config.direction">Dirección</label>
+            <div class="select-wrapper">
+              <select id="modeSelect">
+                <option value="en_es">English → Spanish</option>
+                <option value="es_en">Spanish → English</option>
+                <option value="meaning_en" data-i18n-opt="config.deftoeng">Definición → Inglés</option>
+                <option value="en_meaning" data-i18n-opt="config.engtodef">Inglés → Definición</option>
+                <option value="mixed" data-i18n-opt="config.mixed">Mixto (Recomendado)</option>
+              </select>
+              <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="questionCountSelect" data-i18n="config.questions">Preguntas</label>
+            <div class="select-wrapper">
+              <select id="questionCountSelect">
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30" selected>30</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+                <option value="all" data-i18n-opt="config.all">Todas</option>
+              </select>
+              <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-banner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="info-icon"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div class="info-content">
+            <span data-i18n="config.tip"><strong>Tip pro:</strong> Usa el modo Mixto o &ldquo;Examen 25&rdquo; (cronómetro de 12:30) para preparación simulada real.</span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-block" id="startButton">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span data-i18n="config.start">Comenzar el Reto</span>
+        </button>
+      </section>
+    </div>
+
+    <!-- ══ QUIZ VIEW ══ -->
+    <div id="view-quiz" class="app-view">
+      <section class="glass-card" id="quizPanel">
+        <div class="quiz-header">
+          <div class="stat-group" aria-live="polite">
+            <div class="stat-item" title="Pregunta">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <span id="progressText">1 / 10</span>
+            </div>
+            <div class="stat-item highlight" title="Puntaje">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="#f59e0b" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span id="scoreText">0</span>
+            </div>
+            <div class="stat-item" id="timerPill" title="Tiempo">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span id="timerText">∞</span>
+            </div>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBar"></div>
+          </div>
+          <div class="session-label" id="sessionInfo">Quiz personalizado</div>
+        </div>
+
+        <div class="question-container">
+          <p class="question-hint" id="questionTitle">¿Cómo se dice en español?</p>
+          <h2 class="question-text" id="questionPrompt">...</h2>
+        </div>
+
+        <div class="options-grid" id="optionsContainer"></div>
+
+        <div class="feedback-area hidden-fb" id="feedbackText" aria-live="polite"></div>
+
+        <button class="btn btn-secondary btn-block hidden" id="nextButton">
+          <span data-i18n="quiz.next">Siguiente Pregunta</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </section>
+    </div>
+
+    <!-- ══ RESULTS VIEW ══ -->
+    <div id="view-results" class="app-view">
+      <section class="glass-card" id="resultPanel">
+        <div class="results-header">
+          <div class="score-circle">
+            <svg viewBox="0 0 120 120" class="circular-chart">
+              <circle class="ring-bg" cx="60" cy="60" r="50"/>
+              <circle class="ring-fg" cx="60" cy="60" r="50" id="ringCircle" stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+            </svg>
+            <div class="score-percentage" id="ringLabel">0%</div>
+          </div>
+          <h2 class="result-score" id="finalScoreText">0 / 0</h2>
+          <p class="result-message" id="finalMessageText">¡Buen intento!</p>
+        </div>
+
+        <div class="results-stats">
+          <div class="stat-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="finalTimeText">—</span>
+          </div>
+          <div class="stat-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            <span id="finalModeText">—</span>
+          </div>
+        </div>
+
+        <div class="mistakes-section" id="mistakesContainer"></div>
+
+        <button class="btn btn-primary btn-block" id="restartButton">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+          <span data-i18n="results.back">Volver al Inicio</span>
+        </button>
+      </section>
+    </div>
+
+    <!-- ══ STUDY VIEW ══ -->
+    <div id="view-study" class="app-view">
+      <section class="glass-card" id="studyPanel">
+        <div class="card-header border-bottom">
+          <div class="header-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="title-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <h2 data-i18n="study.title">Directorio de Repaso</h2>
+          </div>
+          <span class="status-badge dark" data-i18n="study.count">11 Bloques</span>
+        </div>
+        <div class="accordion-container" id="tablesContainer"></div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p data-i18n="footer">Diseñado para el aprendizaje intensivo.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
